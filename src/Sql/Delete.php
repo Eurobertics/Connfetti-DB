@@ -1,5 +1,4 @@
 <?php
-
 namespace Connfetti\Db\Sql;
 
 

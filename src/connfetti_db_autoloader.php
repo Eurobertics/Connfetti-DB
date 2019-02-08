@@ -14,5 +14,4 @@ function connfetti_db_autoloader($class) {
         include $class_uri;
     }
 }
-
 spl_autoload_register('connfetti_db_autoloader');

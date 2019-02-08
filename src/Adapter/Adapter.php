@@ -7,10 +7,14 @@ use Connfetti\Db\Exception\QueryException;
 
 class Adapter
 {
+    public static $VERSION = '0.9RC1';
+
     const QUERY_EXECUTE = 0;
     const QUERY_AS_STRING = 1;
     const PREPARED_STATEMENT = 2;
     const DEFAULT_QUERY = 3;
+    const SHOW_VERSION_AS_ARRAY = 'versionasarray';
+    const SHOW_VERSION_AS_STRING = 'versionasstring';
 
     private $config = array();
 
@@ -18,7 +22,7 @@ class Adapter
     private $driver = null;
 
     /** @throws DriverException */
-    public function __construct($config)
+    public function __construct(array $config = array())
     {
         $this->config = array('driver' => '', 'host' => '', 'user' => 'pass', 'db' => 'db');
 
@@ -40,19 +44,23 @@ class Adapter
             }
         }
 
-        try {
-            $driver = new Driver($this->config);
-            $this->setDriver($driver);
-        } catch(DriverException $e) {
-            throw $e;
+        if(count($config) > 0) {
+            try {
+                $driver = new Driver($this->config);
+                $this->setDriver($driver);
+            } catch (DriverException $e) {
+                throw $e;
+            }
         }
     }
 
     public function __destruct()
     {
-        $this->config = array('driver' => '', 'host' => '', 'user' => 'pass', 'db' => 'db');
-        $this->driver->unload();
-        $this->driver = null;
+        if(!empty($this->config['driver'])) {
+            $this->config = array('driver' => '', 'host' => '', 'user' => 'pass', 'db' => 'db');
+            $this->driver->unload();
+            $this->driver = null;
+        }
     }
 
     /** @throws DriverException */
@@ -122,5 +130,33 @@ class Adapter
     public function closePreparedQuery()
     {
         $this->driver->closePreparedQuery();
+    }
+
+    public function version($showversionas = Adapter::SHOW_VERSION_AS_STRING)
+    {
+        $versionarray = array(
+            'Base-Engine' => self::$VERSION,
+            'Driver' => ((is_object($this->driver)) ? $this->driver->version() : 'not loaded'),
+            'INSERT Builder' => \Connfetti\Db\Sql\Builder\Mysql\InsertBuilder::version(),
+            'UPDATE Builder' => \Connfetti\Db\Sql\Builder\Mysql\UpdateBuilder::version(),
+            'SELECT Builder' => \Connfetti\Db\Sql\Builder\Mysql\SelectBuilder::version(),
+            'DELETE Builder' => \Connfetti\Db\Sql\Builder\Mysql\DeleteBuilder::version()
+        );
+        if($showversionas == Adapter::SHOW_VERSION_AS_ARRAY) {
+            return $versionarray;
+        }
+
+        if(php_sapi_name() == "cli") {
+            $delimeter = "\n";
+        } else {
+            $delimeter = "<br />";
+        }
+
+        $versionstring = "Connfetti-DB Version:".$delimeter;
+        foreach($versionarray as $type => $version) {
+            $versionstring .= $type. ': ' . $version . $delimeter;
+        }
+
+        return $versionstring;
     }
 }

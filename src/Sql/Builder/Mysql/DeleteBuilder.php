@@ -8,6 +8,8 @@ use Connfetti\Db\Sql\Builder\BuilderInterface;
 
 class DeleteBuilder extends BuilderAbstract implements BuilderInterface
 {
+    private static $VERSION = '1.0';
+
     public function __construct(array $querydata, Adapter $adapter)
     {
         parent::__construct($querydata, $adapter);
@@ -53,5 +55,10 @@ class DeleteBuilder extends BuilderAbstract implements BuilderInterface
         $this->setTable();
         $this->setWhere();
         return substr($this->sqlstring, 0, -1);
+    }
+
+    public static function version()
+    {
+        return self::$VERSION;
     }
 }

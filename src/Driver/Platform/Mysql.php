@@ -8,6 +8,8 @@ use Connfetti\Db\Exception\QueryException;
 
 class Mysql implements DriverInterface
 {
+    private static $VERSION = '1.0 (mysqli)';
+
     private $host;
     private $user;
     private $pass;
@@ -147,5 +149,10 @@ class Mysql implements DriverInterface
     public function closePreparedQuery()
     {
         $this->stmt->close();
+    }
+
+    public function version()
+    {
+        return self::$VERSION;
     }
 }

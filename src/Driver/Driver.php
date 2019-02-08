@@ -104,5 +104,8 @@ class Driver extends DriverAbstract
         $this->platform->closePreparedQuery();
     }
 
-
+    public function version()
+    {
+        return $this->platform->version();
+    }
 }

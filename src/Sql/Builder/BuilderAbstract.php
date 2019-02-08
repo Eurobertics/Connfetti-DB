@@ -102,4 +102,6 @@ abstract class BuilderAbstract implements PerpareableBuilderInterface
     {
         return $this->stmt_param_array;
     }
+
+    abstract public static function version();
 }

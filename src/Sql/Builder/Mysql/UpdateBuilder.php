@@ -8,6 +8,8 @@ use Connfetti\Db\Sql\Builder\BuilderInterface;
 
 class UpdateBuilder extends BuilderAbstract implements BuilderInterface
 {
+    private static $VERSION = '1.0';
+
     public function __construct(array $querydata, Adapter $adapter)
     {
         parent::__construct($querydata, $adapter);
@@ -30,7 +32,6 @@ class UpdateBuilder extends BuilderAbstract implements BuilderInterface
         $cols = "";
         foreach($this->columns as $key => $value) {
             $value = $this->escStr($value);
-            $v = "";
             if(is_int($value) || $value == '?') {
                 $v = $value;
             } else {
@@ -73,5 +74,8 @@ class UpdateBuilder extends BuilderAbstract implements BuilderInterface
         return substr($this->sqlstring, 0, -1);
     }
 
-
+    public static function version()
+    {
+        return self::$VERSION;
+    }
 }
