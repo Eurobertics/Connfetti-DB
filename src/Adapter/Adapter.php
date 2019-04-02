@@ -7,7 +7,7 @@ use Connfetti\Db\Exception\QueryException;
 
 class Adapter
 {
-    public static $VERSION = '0.9RC1';
+    public static $VERSION = '0.9.1RC1';
 
     const QUERY_EXECUTE = 0;
     const QUERY_AS_STRING = 1;
@@ -24,7 +24,7 @@ class Adapter
     /** @throws DriverException */
     public function __construct(array $config = array())
     {
-        $this->config = array('driver' => '', 'host' => '', 'user' => 'pass', 'db' => 'db');
+        $this->config = array('driver' => '', 'host' => '', 'user' => '', 'pass' => '', 'db' => '');
 
         if(is_array($config)) {
             if(isset($config['driver'])) {
@@ -57,7 +57,7 @@ class Adapter
     public function __destruct()
     {
         if(!empty($this->config['driver'])) {
-            $this->config = array('driver' => '', 'host' => '', 'user' => 'pass', 'db' => 'db');
+            $this->config = array('driver' => '', 'host' => '', 'user' => '', 'pass' => '', 'db' => '');
             $this->driver->unload();
             $this->driver = null;
         }
