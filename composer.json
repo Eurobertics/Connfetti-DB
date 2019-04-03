@@ -1,5 +1,5 @@
 {
-  "name": "eurobertics/confetti-db",
+  "name": "eurobertics/connfetti-db",
   "description": "A model based database connection library for multibple database flavors.",
   "type": "library",
   "require": {
@@ -8,7 +8,7 @@
   },
   "autoload": {
     "psr-4" : {
-      "Confetti\\Db\\" : "/src"
+      "Confetti\\Db\\" : "src/"
     }
   },
   "license":      "GPL-3.0-or-later",
