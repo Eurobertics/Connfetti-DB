@@ -8,7 +8,7 @@
   },
   "autoload": {
     "psr-4" : {
-      "Confetti\\Db\\" : "src/"
+      "Connfetti\\Db\\" : "src/"
     }
   },
   "license":      "GPL-3.0-or-later",
