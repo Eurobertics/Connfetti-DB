@@ -59,7 +59,7 @@ class UpdateBuilder extends BuilderAbstract implements BuilderInterface
                         $this->sqlstring .= $this->where[$i][0]." IS NULL ";
                     }
                 }
-                $this->sqlstring .= $this->where[$i][0]." ".$this->where[$i][1]." ".((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : $this->escStr($this->where[$i][2]))." ";
+                $this->sqlstring .= $this->where[$i][0]." ".$this->where[$i][1]." ".((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'".$this->escStr($this->where[$i][2]))."'"." ";
             } else {
                 $this->sqlstring .= $this->where[$i]." ";
             }
