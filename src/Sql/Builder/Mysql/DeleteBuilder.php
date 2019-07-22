@@ -8,7 +8,7 @@ use Connfetti\Db\Sql\Builder\BuilderInterface;
 
 class DeleteBuilder extends BuilderAbstract implements BuilderInterface
 {
-    private static $VERSION = '1.0';
+    private static $VERSION = '1.0.1';
 
     public function __construct(array $querydata, Adapter $adapter)
     {
@@ -43,7 +43,7 @@ class DeleteBuilder extends BuilderAbstract implements BuilderInterface
                         $this->sqlstring .= $this->where[$i][0]." IS NULL ";
                     }
                 }
-                $this->sqlstring .= $this->where[$i][0]." ".$this->where[$i][1]." ".((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'".$this->escStr($this->where[$i][2]))."'"." ";
+                $this->sqlstring .= $this->where[$i][0]." ".$this->where[$i][1]." ".((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'".$this->escStr($this->where[$i][2])."'")." ";
             } else {
                 $this->sqlstring .= $this->where[$i]." ";
             }

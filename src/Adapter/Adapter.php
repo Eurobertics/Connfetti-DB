@@ -7,7 +7,7 @@ use Connfetti\Db\Exception\QueryException;
 
 class Adapter
 {
-    public static $VERSION = '0.9.3';
+    public static $VERSION = '0.9.4';
 
     const QUERY_EXECUTE = 0;
     const QUERY_AS_STRING = 1;
