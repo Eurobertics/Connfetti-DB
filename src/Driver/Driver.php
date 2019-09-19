@@ -104,6 +104,11 @@ class Driver extends DriverAbstract
         $this->platform->closePreparedQuery();
     }
 
+    public function lastInsertId()
+    {
+        return $this->platform->lastInsertId();
+    }
+
     public function version()
     {
         return $this->platform->version();

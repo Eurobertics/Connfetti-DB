@@ -20,5 +20,6 @@ interface DriverInterface
     /** @throws QueryException */
     public function executePreparedQuery();
     public function closePreparedQuery();
+    public function lastInsertId();
     public function version();
 }

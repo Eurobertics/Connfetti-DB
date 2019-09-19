@@ -7,7 +7,7 @@ use Connfetti\Db\Exception\QueryException;
 
 class Adapter
 {
-    public static $VERSION = '0.9.6';
+    public static $VERSION = '0.9.7';
 
     const QUERY_EXECUTE = 0;
     const QUERY_AS_STRING = 1;
@@ -130,6 +130,11 @@ class Adapter
     public function closePreparedQuery()
     {
         $this->driver->closePreparedQuery();
+    }
+
+    public function lastInsertId()
+    {
+        return $this->driver->lastInsertId();
     }
 
     public function version($showversionas = Adapter::SHOW_VERSION_AS_STRING)

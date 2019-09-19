@@ -34,5 +34,6 @@ abstract class DriverAbstract
     abstract public function preparedQueryParams(array $params);
     abstract public function executePreparedQuery();
     abstract public function closePreparedQuery();
+    abstract public function lastInsertId();
     abstract public function version();
 }
