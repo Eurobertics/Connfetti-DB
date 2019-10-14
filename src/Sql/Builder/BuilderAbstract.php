@@ -81,7 +81,7 @@ abstract class BuilderAbstract implements PerpareableBuilderInterface
 
     public function setupPreparedStatement()
     {
-        if(!($this instanceof SelectBuilder)) {
+        if(!($this instanceof SelectBuilder) && $this->columns != null) {
             foreach ($this->columns as $key => $value) {
                 $this->stmt_param_array[] = $value;
                 $this->columns[$key] = '?';
@@ -90,7 +90,7 @@ abstract class BuilderAbstract implements PerpareableBuilderInterface
 
         if($this->haswhere) {
             for($i = 0; $i < count($this->where); $i++) {
-                if(count($this->where[$i]) == 3) {
+                if(is_array($this->where[$i]) && count($this->where[$i]) == 3) {
                     $this->stmt_param_array[] = $this->where[$i][2];
                     $this->where[$i][2] = '?';
                 }
