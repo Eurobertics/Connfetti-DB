@@ -15,6 +15,7 @@ class Sql
     const COMPERABLE_LT = "<";
     const COMPERABLE_GET = ">=";
     const COMPERABLE_LET = "<=";
+    const COMPERABLE_LIKE = 'LIKE';
 
     /** @var Adapter */
     private $adapter = null;
