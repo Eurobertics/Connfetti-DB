@@ -30,7 +30,6 @@ class ResultSet implements \IteratorAggregate
         return new \ArrayIterator($this->datamodels);
     }
 
-
     private function storeDataModel($datarow)
     {
         $this->datamodels[] = new ResultModel($datarow);
