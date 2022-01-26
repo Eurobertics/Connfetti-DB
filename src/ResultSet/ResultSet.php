@@ -3,8 +3,10 @@ namespace Connfetti\Db\ResultSet;
 
 
 use Connfetti\Db\ResultModel\ResultModel;
+use Exception;
+use Traversable;
 
-class ResultSet
+class ResultSet implements \IteratorAggregate
 {
     private $countrows = 0;
     private $datamodels = array();
@@ -22,6 +24,12 @@ class ResultSet
         $this->countrows = 0;
         $this->datamodels = array();
     }
+
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->datamodels);
+    }
+
 
     private function storeDataModel($datarow)
     {
