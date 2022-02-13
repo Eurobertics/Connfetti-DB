@@ -40,6 +40,13 @@ class Delete implements QueryInterface
         return $this;
     }
 
+    public function in($insearch, $indata = array())
+    {
+        $this->hasin = true;
+        $this->in = $indata;
+        $this->insearch = $insearch;
+    }
+
     public function isNotNull($col)
     {
         $this->where[] = array($col, 'notnull');
@@ -61,6 +68,18 @@ class Delete implements QueryInterface
     public function or()
     {
         $this->where[] = "OR";
+        return $this;
+    }
+
+    public function condStart()
+    {
+        $this->where[] = '(';
+        return $this;
+    }
+
+    public function condEnd()
+    {
+        $this->where[] = ')';
         return $this;
     }
 }

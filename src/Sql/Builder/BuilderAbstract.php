@@ -22,6 +22,8 @@ abstract class BuilderAbstract implements PerpareableBuilderInterface
     protected $having = null;
     protected $groupby = null;
     protected $union = null;
+    protected $in = null;
+    protected $insearch = null;
 
     protected $stmt_param_array = array();
 
@@ -31,6 +33,7 @@ abstract class BuilderAbstract implements PerpareableBuilderInterface
     protected $hasgroupby = false;
     protected $hasorderby = false;
     protected $hasunion = false;
+    protected $hasin = false;
 
     protected $sqlstring = "";
 
@@ -60,6 +63,8 @@ abstract class BuilderAbstract implements PerpareableBuilderInterface
         $this->having = null;
         $this->groupby = null;
         $this->union = null;
+        $this->in = null;
+        $this->insearch = null;
 
         $this->stmt_param_array = array();
 
@@ -69,6 +74,7 @@ abstract class BuilderAbstract implements PerpareableBuilderInterface
         $this->hasgroupby = false;
         $this->hasorderby = false;
         $this->hasunion = false;
+        $this->hasin = false;
     }
 
     protected function escStr($value)

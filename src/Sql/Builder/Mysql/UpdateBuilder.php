@@ -66,11 +66,20 @@ class UpdateBuilder extends BuilderAbstract implements BuilderInterface
         }
     }
 
+    private function setIn()
+    {
+        if(!$this->hasin) {
+            return;
+        }
+        $this->sqlstring .= $this->insearch." IN(".implode(",", $this->in).") ";
+    }
+
     public function getAsString()
     {
         $this->setTable();
         $this->setColumns();
         $this->setWhere();
+        $this->setIn();
         return substr($this->sqlstring, 0, -1);
     }
 

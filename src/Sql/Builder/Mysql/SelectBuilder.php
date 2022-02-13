@@ -75,6 +75,14 @@ class SelectBuilder extends BuilderAbstract implements BuilderInterface
         }
     }
 
+    private function setIn()
+    {
+        if(!$this->hasin) {
+            return;
+        }
+        $this->sqlstring .= $this->insearch." IN(".implode(",", $this->in).") ";
+    }
+
     private function setHaving()
     {
         if(!$this->hashaving) {
@@ -129,6 +137,7 @@ class SelectBuilder extends BuilderAbstract implements BuilderInterface
         $this->setTable();
         $this->setJoin();
         $this->setWhere();
+        $this->setIn();
         $this->setHaving();
         $this->setGroupBy();
         $this->setOrderBy();
