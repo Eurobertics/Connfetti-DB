@@ -10,7 +10,7 @@ interface DriverInterface
     /** @throws DriverException */
     public function checkEnvironment();
     /** @throws DriverException */
-    public function connection(bool $dummyconnection = false);
+    public function connection();
     public function close();
     public function escStr($str);
     /** @throws QueryException */

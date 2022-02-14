@@ -53,12 +53,8 @@ class Mysql implements DriverInterface
     }
 
     /** @throws DriverException */
-    public function connection(bool $dummyconnection = false)
+    public function connection()
     {
-        if($dummyconnection) {
-            $this->sql = new \mysqli();
-            return;
-        }
         $mysqli = new \mysqli($this->host, $this->user, $this->pass, $this->db);
         if($mysqli->connect_errno) {
             throw new DriverException($mysqli->connect_error, $mysqli->connect_errno);

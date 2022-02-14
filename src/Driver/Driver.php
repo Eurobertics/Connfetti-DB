@@ -36,10 +36,10 @@ class Driver extends DriverAbstract
     }
 
     /** @throws DriverException */
-    public function init(bool $dummyconnection = false)
+    public function init()
     {
         try {
-            $this->platform->connection($dummyconnection);
+            $this->platform->connection();
             $this->setIsRunable();
         } catch(DriverException $e) {
             $this->setNotRunable();

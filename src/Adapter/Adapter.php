@@ -16,16 +16,14 @@ class Adapter
     const SHOW_VERSION_AS_ARRAY = 'versionasarray';
     const SHOW_VERSION_AS_STRING = 'versionasstring';
 
-    private $dummyconnection = false;
     private $config = array();
 
     /** @var \Connfetti\Db\Driver\Driver */
     private $driver = null;
 
     /** @throws DriverException */
-    public function __construct(array $config = array(), bool $dummyconnection = false)
+    public function __construct(array $config = array())
     {
-        $this->dummyconnection = $dummyconnection;
         $this->config = array('driver' => '', 'host' => '', 'user' => '', 'pass' => '', 'db' => '');
 
         if(is_array($config)) {
@@ -70,7 +68,7 @@ class Adapter
     {
         $this->driver = $driver;
         try {
-            $this->driver->init($this->dummyconnection);
+            $this->driver->init();
         } catch(DriverException $e) {
             if(!$this->driver->runableState()) {
                 throw new DriverException("Driver '".$this->config['driver']."' is not ready!", 2, $e);
@@ -90,18 +88,6 @@ class Adapter
         return $this->config['driver'];
     }
 
-    private function checkDummyConnection()
-    {
-        if($this->dummyconnection) {
-            throw new DriverException("ERROR! Dummy connection mode active. Method is not available in this mode.", -1);
-        }
-    }
-
-    public function isDummyConnection()
-    {
-        return $this->dummyconnection;
-    }
-
     public function escStr(string $str)
     {
         return $this->driver->escStr($str);
@@ -110,7 +96,6 @@ class Adapter
     /** @throws QueryException */
     public function query(string $querystring)
     {
-        $this->checkDummyConnection();
         $res = null;
         try {
             $res = $this->driver->query($querystring);
@@ -122,20 +107,17 @@ class Adapter
 
     public function prepareableQuery(string $querystring, array $params)
     {
-        $this->checkDummyConnection();
         $this->driver->prepareableQuery($querystring, $params);
     }
 
     public function preparedQueryParams(array $params)
     {
-        $this->checkDummyConnection();
         $this->driver->preparedQueryParams($params);
     }
 
     /** @throws QueryException */
     public function executePreparedQuery()
     {
-        $this->checkDummyConnection();
         $res = null;
         try {
             $res = $this->driver->executePreparedQuery();
@@ -147,13 +129,11 @@ class Adapter
 
     public function closePreparedQuery()
     {
-        $this->checkDummyConnection();
         $this->driver->closePreparedQuery();
     }
 
     public function lastInsertId()
     {
-        $this->checkDummyConnection();
         return $this->driver->lastInsertId();
     }
 
@@ -162,7 +142,6 @@ class Adapter
         $versionarray = array(
             'Base-Engine' => self::$VERSION,
             'Driver' => ((is_object($this->driver)) ? $this->driver->version() : 'not loaded'),
-            'Dummyconnection active' => (($this->dummyconnection) ? 'yes' : 'no'),
             'INSERT Builder' => constant("\\Connfetti\\Db\\Sql\\Builder\\".$this->config['driver']."\\InsertBuilder::version()"),
             'UPDATE Builder' => constant("\\Connfetti\\Db\\Sql\\Builder\\".$this->config['driver']."\\UpdateBuilder::version()"),
             'SELECT Builder' => constant("\\Connfetti\\Db\\Sql\\Builder\\".$this->config['driver']."\\SelectBuilder::version()"),
