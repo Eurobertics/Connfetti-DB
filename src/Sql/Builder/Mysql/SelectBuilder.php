@@ -67,20 +67,16 @@ class SelectBuilder extends BuilderAbstract implements BuilderInterface
                         $this->sqlstring .= $this->where[$i][0]." IS NULL ";
                     }
                 } else {
-                    $this->sqlstring .= $this->where[$i][0] . " " . $this->where[$i][1] . " " . ((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'".$this->escStr($this->where[$i][2])."'") . " ";
+                    if($this->where[$i][1] == 'in') {
+                        $this->sqlstring .= $this->where[$i][0]." IN(".implode(',', $this->where[$i][2]).") ";
+                    } else {
+                        $this->sqlstring .= $this->where[$i][0] . " " . $this->where[$i][1] . " " . ((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'" . $this->escStr($this->where[$i][2]) . "'") . " ";
+                    }
                 }
             } else {
                 $this->sqlstring .= $this->where[$i]." ";
             }
         }
-    }
-
-    private function setIn()
-    {
-        if(!$this->hasin) {
-            return;
-        }
-        $this->sqlstring .= $this->insearch." IN(".implode(",", $this->in).") ";
     }
 
     private function setHaving()
@@ -137,7 +133,6 @@ class SelectBuilder extends BuilderAbstract implements BuilderInterface
         $this->setTable();
         $this->setJoin();
         $this->setWhere();
-        $this->setIn();
         $this->setHaving();
         $this->setGroupBy();
         $this->setOrderBy();

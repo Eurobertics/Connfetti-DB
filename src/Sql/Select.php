@@ -99,11 +99,18 @@ class Select implements QueryInterface
         return $this;
     }
 
+    public function whereKeywordOnly()
+    {
+        $this->haswhere = true;
+        return $this;
+    }
+
     public function in($insearch, $indata = array())
     {
-        $this->hasin = true;
-        $this->in = $indata;
-        $this->insearch = $insearch;
+        if($this->haswhere) {
+            $this->where[] = array($insearch, 'in', $indata);
+        }
+        return $this;
     }
 
     public function isNotNull($col)
