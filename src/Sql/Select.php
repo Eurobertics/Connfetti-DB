@@ -17,8 +17,6 @@ class Select implements QueryInterface
     private $having = array();
     private $groupby = array();
     private $union = null;
-    private $in = null;
-    private $insearch = null;
 
     private $haswhere = false;
     private $hasjoin = false;
@@ -26,7 +24,6 @@ class Select implements QueryInterface
     private $hasgroupby = false;
     private $hasorderby = false;
     private $hasunion = false;
-    private $hasin = false;
 
     public function __construct($table = "")
     {
@@ -48,8 +45,6 @@ class Select implements QueryInterface
         $this->having = array();
         $this->groupby = array();
         $this->union = null;
-        $this->in = null;
-        $this->insearch = null;
 
         $this->haswhere = false;
         $this->hasjoin = false;
@@ -57,7 +52,6 @@ class Select implements QueryInterface
         $this->hasgroupby = false;
         $this->hasorderby = false;
         $this->hasunion = false;
-        $this->hasin = false;
     }
 
     public function getQueryDataAsArray()

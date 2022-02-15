@@ -8,7 +8,7 @@ use Connfetti\Db\Sql\Builder\BuilderInterface;
 
 class SelectBuilder extends BuilderAbstract implements BuilderInterface
 {
-    private static $VERSION = '1.0.1';
+    private static $VERSION = '1.0.2';
 
     public function __construct(array $querydata, Adapter $adapter)
     {

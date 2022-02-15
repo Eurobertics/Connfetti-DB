@@ -8,7 +8,7 @@ use Connfetti\Db\Sql\Builder\BuilderInterface;
 
 class UpdateBuilder extends BuilderAbstract implements BuilderInterface
 {
-    private static $VERSION = '1.0.1';
+    private static $VERSION = '1.0.2';
 
     public function __construct(array $querydata, Adapter $adapter)
     {
@@ -58,20 +58,17 @@ class UpdateBuilder extends BuilderAbstract implements BuilderInterface
                     if($this->where[$i][1] == 'null') {
                         $this->sqlstring .= $this->where[$i][0]." IS NULL ";
                     }
+                } else {
+                    if($this->where[$i][1] == 'in') {
+                        $this->sqlstring .= $this->where[$i][0]." IN(".implode(',', $this->where[$i][2]).") ";
+                    } else {
+                        $this->sqlstring .= $this->where[$i][0] . " " . $this->where[$i][1] . " " . ((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'" . $this->escStr($this->where[$i][2]) . "'") . " ";
+                    }
                 }
-                $this->sqlstring .= $this->where[$i][0]." ".$this->where[$i][1]." ".((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'".$this->escStr($this->where[$i][2])."'")." ";
             } else {
                 $this->sqlstring .= $this->where[$i]." ";
             }
         }
-    }
-
-    private function setIn()
-    {
-        if(!$this->hasin) {
-            return;
-        }
-        $this->sqlstring .= $this->insearch." IN(".implode(",", $this->in).") ";
     }
 
     public function getAsString()
@@ -79,7 +76,6 @@ class UpdateBuilder extends BuilderAbstract implements BuilderInterface
         $this->setTable();
         $this->setColumns();
         $this->setWhere();
-        $this->setIn();
         return substr($this->sqlstring, 0, -1);
     }
 
