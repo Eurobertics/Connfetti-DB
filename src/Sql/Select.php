@@ -99,6 +99,12 @@ class Select implements QueryInterface
         return $this;
     }
 
+    public function whereBetween($col, $value1, $value2)
+    {
+        $this->haswhere = true;
+        $this->where[] = array($col, 'between', $value1, $value2);
+    }
+
     public function in($insearch, $indata = array())
     {
         if($this->haswhere) {

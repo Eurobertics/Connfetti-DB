@@ -61,6 +61,8 @@ class UpdateBuilder extends BuilderAbstract implements BuilderInterface
                 } else {
                     if($this->where[$i][1] == 'in') {
                         $this->sqlstring .= $this->where[$i][0]." IN(".implode(',', $this->where[$i][2]).") ";
+                    } elseif($this->where[$i][1] == 'between') {
+                        $this->sqlstring .= $this->where[$i][0] . " BETWEEN " . $this->where[$i][2]. " AND ".$this->where[$i][3]." ";
                     } else {
                         $this->sqlstring .= $this->where[$i][0] . " " . $this->where[$i][1] . " " . ((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'" . $this->escStr($this->where[$i][2]) . "'") . " ";
                     }
