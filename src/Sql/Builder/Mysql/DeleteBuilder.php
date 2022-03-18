@@ -8,7 +8,7 @@ use Connfetti\Db\Sql\Builder\BuilderInterface;
 
 class DeleteBuilder extends BuilderAbstract implements BuilderInterface
 {
-    private static $VERSION = '1.0.2';
+    private static $VERSION = '1.0.3';
 
     public function __construct(array $querydata, Adapter $adapter)
     {
