@@ -8,7 +8,7 @@ use Connfetti\Db\Sql\Builder\BuilderInterface;
 
 class DeleteBuilder extends BuilderAbstract implements BuilderInterface
 {
-    private static $VERSION = '1.0.4';
+    private static $VERSION = '1.0.5';
 
     public function __construct(array $querydata, Adapter $adapter)
     {
@@ -44,9 +44,9 @@ class DeleteBuilder extends BuilderAbstract implements BuilderInterface
                     }
                 } else {
                     if($this->where[$i][1] == 'in') {
-                        $this->sqlstring .= $this->where[$i][0]." IN(".implode(',', $this->where[$i][2]).") ";
+                        $this->sqlstring .= $this->where[$i][0]." IN(".implode(',', ((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'" . $this->escStr($this->where[$i][2]) . "'")).") ";
                     } elseif($this->where[$i][1] == 'between') {
-                        $this->sqlstring .= $this->where[$i][0] . " BETWEEN " . $this->where[$i][2]. " AND ".$this->where[$i][3]." ";
+                        $this->sqlstring .= $this->where[$i][0] . " BETWEEN " . ((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'" . $this->escStr($this->where[$i][2]) . "'"). " AND ".((is_int($this->where[$i][3]) || $this->where[$i][3] == '?') ? $this->where[$i][3] : "'" . $this->escStr($this->where[$i][3]) . "'")." ";
                     } else {
                         $this->sqlstring .= $this->where[$i][0] . " " . $this->where[$i][1] . " " . ((is_int($this->where[$i][2]) || $this->where[$i][2] == '?') ? $this->where[$i][2] : "'" . $this->escStr($this->where[$i][2]) . "'") . " ";
                     }
