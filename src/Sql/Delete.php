@@ -46,17 +46,17 @@ class Delete implements QueryInterface
         return $this;
     }
 
-    public function whereBetween($col, $value1, $value2)
+    public function whereBetween($col, $type = Sql::COMPERABLE_BETWEEN, $value1, $value2)
     {
         $this->haswhere = true;
-        $this->where[] = array($col, 'between', $value1, $value2);
+        $this->where[] = array($col, $type, $value1, $value2);
         return $this;
     }
 
-    public function in($insearch, $indata = array())
+    public function in($insearch, $type = Sql::COMPERABLE_IN, $indata = array())
     {
         if($this->haswhere) {
-            $this->where[] = array($insearch, 'in', $indata);
+            $this->where[] = array($insearch, $type, $indata);
         }
         return $this;
     }

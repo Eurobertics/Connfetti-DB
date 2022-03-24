@@ -16,6 +16,12 @@ class Sql
     const COMPERABLE_GET = ">=";
     const COMPERABLE_LET = "<=";
     const COMPERABLE_LIKE = 'LIKE';
+    const COMPERABLE_NULL = 'null';
+    const COMPERABLE_NOTNULL = 'notnull';
+    const COMPERABLE_IN = 'in';
+    const COMPERABLE_NOTIN = 'notin';
+    const COMPERABLE_BETWEEN = 'between';
+    const COMPERABLE_NOTBETWEEN = 'notbetween';
 
     /** @var Adapter */
     private $adapter = null;
