@@ -99,7 +99,7 @@ class Select implements QueryInterface
         return $this;
     }
 
-    public function whereBetween($col, $type = Sql::COMPERABLE_BETWEEN, $value1, $value2)
+    public function whereBetween($col, $value1, $value2, $type = Sql::COMPERABLE_BETWEEN)
     {
         $this->haswhere = true;
         $this->where[] = array($col, $type, $value1, $value2);
